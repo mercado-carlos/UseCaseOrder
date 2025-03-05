@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "UseCaseOrder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start:local": "concurrently \"yarn server\" \"yarn client\"",
+    "server": "yarn workspace server dev",
+    "client": "yarn workspace client start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
