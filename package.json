@@ -9,6 +9,7 @@
     "server"
   ],
   "scripts": {
+    "start": "concurrently \"yarn server\" \"yarn client\"",
     "start:local": "concurrently \"yarn server\" \"yarn client\"",
     "server": "yarn workspace server dev",
     "client": "yarn workspace client start"
