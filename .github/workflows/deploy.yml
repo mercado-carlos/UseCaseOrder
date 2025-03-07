@@ -1,0 +1,45 @@
+name: Deploy to GitHub Pages and Run Server
+
+on:
+  push:
+    branches:
+      - master  # Se ejecutará cuando haya un push en la rama master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Usamos Ubuntu como sistema operativo para el job
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3  # Hacer checkout del código fuente
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Aquí puedes especificar la versión de Node.js que necesitas
+
+      - name: Install dependencies
+        run: yarn install  # Instalar las dependencias generales de los workspaces (client y server)
+
+      - name: Install client dependencies
+        run: yarn workspace client install  # Instalar dependencias del cliente React
+
+      - name: Install server dependencies
+        run: yarn workspace server install  # Instalar dependencias del servidor Express
+
+      - name: Build client (React app)
+        run: yarn workspace client build  # Construir la aplicación React para producción
+
+      - name: Deploy React app to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Rama donde se almacenarán los archivos generados por el build
+          folder: client/build  # Carpeta donde se encuentra el build de la aplicación React
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Necesario para interactuar con la API de GitHub
+
+      - name: Run client and server locally
+        run: |
+          yarn start
+        env:
+          NODE_ENV: production  # Establecer NODE_ENV como producción (opcional según tus necesidades)
