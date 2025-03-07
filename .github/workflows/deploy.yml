@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages and Run Server
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
           branch: gh-pages  # Rama donde se almacenarán los archivos generados por el build
           folder: client/build  # Carpeta donde se encuentra el build de la aplicación React
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Necesario para interactuar con la API de GitHub
+          GITHUB_TOKEN: ${{ secrets.USE_CASE_ORDER_TOKEN }}  # Necesario para interactuar con la API de GitHub
 
       - name: Run client and server locally
         run: |
